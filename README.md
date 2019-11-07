@@ -4,6 +4,6 @@
 
 2. Get into the folder: `cd atm-simulator`
 
-3. Run `npm install && npm start`
+3. Run `npm install && npm run dev`
 
 4. Open browser to `localhost:3000`
