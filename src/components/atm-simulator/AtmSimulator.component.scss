@@ -1,0 +1,19 @@
+.AtmSimulator {
+  // Position & sizing
+  position: relative;
+  margin: 60px auto;
+  width: 380px;
+  height: 560px;
+
+  // Color
+  background-color: #fff;
+
+  // Shadows
+  border-radius: 15px;
+  -webkit-box-shadow: 0px 4px 15px 5px rgba(227, 227, 227, 1);
+  -moz-box-shadow: 0px 4px 15px 5px rgba(227, 227, 227, 1);
+  box-shadow: 0px 4px 15px 5px rgba(227, 227, 227, 1);
+
+  // Spacing
+  padding: 20px;
+}
