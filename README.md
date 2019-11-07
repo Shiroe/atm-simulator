@@ -1,6 +1,6 @@
 # ATM - Simulator
 
-1. Run `git clone ${repository clone link}`
+1. Run `git clone https://github.com/Shiroe/atm-simulator.git`
 
 2. Get into the folder: `cd atm-simulator`
 
