@@ -1,19 +1,134 @@
 .AtmSimulator {
   // Position & sizing
   position: relative;
-  margin: 60px auto;
-  width: 380px;
+  width: 340px;
   height: 560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 
-  // Color
+  // Colors & Borders
   background-color: #fff;
+  border-radius: 15px;
 
   // Shadows
-  border-radius: 15px;
   -webkit-box-shadow: 0px 4px 15px 5px rgba(227, 227, 227, 1);
   -moz-box-shadow: 0px 4px 15px 5px rgba(227, 227, 227, 1);
   box-shadow: 0px 4px 15px 5px rgba(227, 227, 227, 1);
 
   // Spacing
+  margin: 60px auto;
   padding: 20px;
+}
+
+.AtmSimulator .Count {
+  // Position & Sizing
+  width: 100%;
+  font-size: 3em;
+  display: flex;
+  justify-content: flex-end;
+  overflow: hidden;
+
+  // Color
+  color: #333;
+
+  // Spacing
+  padding: 10px;
+}
+
+.AtmSimulator .NumPad {
+  // Position & Sizing
+  width: 100%;
+  height: 340px;
+  font-size: 1.4em;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: space-between;
+
+  // Color
+  color: #444;
+
+  // Spacing
+  padding: 10px;
+
+  // Corection
+
+  &__key {
+    // Position & Sizing
+    width: 60px;
+    height: 60px;
+    line-height: 1.4em;
+
+    // Colors & Borders
+    background-color: #f9f9f9;
+    border-radius: 50%;
+    outline: none;
+
+    // Spacing
+    padding: 16px;
+    margin: 0 15px;
+
+    // Events
+    cursor: pointer;
+
+    &:hover {
+      background-color: #eee;
+    }
+
+    &:active {
+      background-color: #e7e7e7;
+    }
+
+    &::after {
+      content: '';
+      flex: auto;
+    }
+
+    // Correction
+    &:nth-child(10) {
+      visibility: hidden;
+    }
+
+    &--label {
+      width: 100%;
+      height: 100%;
+      line-height: 100%;
+    }
+  }
+}
+
+.AtmSimulator .WithdrawBtn {
+  // Position & Sizing
+  width: 100%;
+
+  &__button {
+    // Position & Sizing
+    width: 100%;
+    font-size: 1.4em;
+
+    // Colors & Borders
+    color: #007bff;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    outline: none;
+
+    // Spacing
+    padding: 12px 16px;
+
+    // events
+    cursor: pointer;
+
+    &:hover {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    &:active {
+      background-color: darken(#007bff, 10%);
+      color: #fff;
+    }
+  }
 }

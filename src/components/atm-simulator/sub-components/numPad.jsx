@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const NUMPAD = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'del'];
+const NUMPAD = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'del'];
 
 function NumPad({ action }) {
   function onKeyboardKeyUp(ev) {
@@ -21,7 +21,7 @@ function NumPad({ action }) {
           onClick={() => action(key)}
           onKeyUp={onKeyboardKeyUp}
         >
-          <span className="NumPad__key--label">{key}</span>
+          {key && <span className="NumPad__key--label">{key}</span>}
         </div>
       ))}
     </div>
