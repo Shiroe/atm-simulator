@@ -18,7 +18,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1 className="App_heading">ATM Simulator</h1>
+        <h1 className="App__heading">ATM Simulator</h1>
         <AtmSimulator
           withdraw={this.withdraw}
           separator=","
