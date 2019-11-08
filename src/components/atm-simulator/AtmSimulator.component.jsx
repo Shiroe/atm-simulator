@@ -16,32 +16,41 @@ class AtmSimulator extends React.Component {
     };
 
     this.onValueChange = this.onValueChange.bind(this);
+    this.withdrawAmount = this.withdrawAmount.bind(this);
   }
 
   onValueChange(value) {
-    if (value === 'del') return;
-
     const { count } = this.state;
-    const updatedCount = `${count}${value}`;
+    let updatedCount = count;
+
+    if (value === 'del') {
+      updatedCount = count.length === 1 ? '0' : count.slice(0, -1);
+    } else {
+      updatedCount = count === '0' ? value : `${count}${value}`;
+    }
 
     this.setState({ count: updatedCount });
   }
 
   withdrawAmount() {
-    // send clean numeric value only
-
     const { withdraw } = this.props;
-    const { count } = this.state; // should be formatted to clean numeric value before send
+    const { count } = this.state;
     return withdraw(count);
   }
 
   render() {
     const { count } = this.state;
-    const { isDisabled } = this.props;
+    const { isDisabled, separator, prefix, postfix } = this.props;
 
     return (
       <div className="AtmSimulator">
-        <Count count={count} disabled={isDisabled} />
+        <Count
+          count={count}
+          separator={separator}
+          disabled={isDisabled}
+          prefix={prefix}
+          postfix={postfix}
+        />
         <NumPad action={this.onValueChange} disabled={isDisabled} />
         <WithdrawBtn withdraw={this.withdrawAmount} disabled={isDisabled} />
       </div>
@@ -51,6 +60,8 @@ class AtmSimulator extends React.Component {
 
 AtmSimulator.defaultProps = {
   count: '0',
+  prefix: '',
+  postfix: '',
   separator: null,
   isDisabled: false
 };
@@ -59,7 +70,9 @@ AtmSimulator.propTypes = {
   count: PropTypes.string,
   separator: PropTypes.string,
   isDisabled: PropTypes.bool,
-  withdraw: PropTypes.func.isRequired
+  withdraw: PropTypes.func.isRequired,
+  prefix: PropTypes.string,
+  postfix: PropTypes.string
 };
 
 export default AtmSimulator;
