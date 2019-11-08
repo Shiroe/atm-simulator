@@ -2,11 +2,12 @@ import React from 'react';
 import { hot } from 'react-hot-loader';
 import './app.component.scss';
 
+import WithdrawAPI from '../../services/withdrawAPI';
 import AtmSimulator from '../atm-simulator/index';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.withdraw = this.withdraw.bind(this);
   }
@@ -14,6 +15,13 @@ class App extends React.Component {
   withdraw(value) {
     if (Number(value) === 0) return console.log('Please specify the amount');
     console.log(`Withdrawing ${value}`);
+
+    WithdrawAPI.withdraw(Number(value))
+      .then(data => {
+        console.log('SUCCESS: ', data);
+        alert(data);
+      })
+      .catch(error => alert(error));
   }
 
   render() {
