@@ -29,7 +29,11 @@ function NumPad({ action }) {
         >
           {key && (
             <span className="NumPad__key--label">
-              {key === 'del' ? <i className="fa fa-backspace"></i> : key}
+              {key === 'del' ? (
+                <i className="fa fa-backspace" aria-label="Backspace"></i>
+              ) : (
+                key
+              )}
             </span>
           )}
         </div>

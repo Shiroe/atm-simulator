@@ -12,6 +12,7 @@ class App extends React.Component {
   }
 
   withdraw(value) {
+    if (Number(value) === 0) return console.log('Please specify the amount');
     console.log(`Withdrawing ${value}`);
   }
 
