@@ -25,6 +25,10 @@ const customStyles = {
   }
 };
 
+const CURRENCIES = ['', '$', '€'];
+const SEPARATORS = ['', ',', '.', ' '];
+const POSTFIXES = ['', '%'];
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -60,7 +64,10 @@ class App extends React.Component {
       })
       .catch(({ response: { data } }) => {
         this.setState({
-          modal: { content: data.toString(), header: 'Error' }
+          modal: {
+            content: data,
+            header: 'Error'
+          }
         });
       });
 
@@ -83,9 +90,9 @@ class App extends React.Component {
         <h1 className="App__heading">ATM Simulator</h1>
         <AtmSimulator
           withdraw={this.withdraw}
-          separator=","
-          prefix="$"
-          postfix=""
+          separator={SEPARATORS[1]}
+          prefix={CURRENCIES[1]}
+          postfix={POSTFIXES[0]}
         />
         <Modal ariaHideApp={false} style={customStyles} isOpen={showModal}>
           <h1 className="Modal__header">{modal.header}</h1>
