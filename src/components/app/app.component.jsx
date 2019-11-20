@@ -1,5 +1,5 @@
 import React from 'react';
-import { hot } from 'react-hot-loader';
+// import { hot } from 'react-hot-loader';
 import './app.component.scss';
 
 import Modal from 'react-modal';
@@ -29,6 +29,12 @@ const CURRENCIES = ['', '$', '€'];
 const SEPARATORS = ['', ',', '.', ' '];
 const POSTFIXES = ['', '%'];
 
+const BANKNOTES = [100, 500, 1000];
+
+function isValidAmount(amount) {
+  return amount % BANKNOTES[0] === 0;
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -41,35 +47,78 @@ class App extends React.Component {
       }
     };
 
+    this.tryWithdraw = this.tryWithdraw.bind(this);
     this.withdraw = this.withdraw.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
-  async withdraw(value) {
+  tryWithdraw(value) {
     if (Number(value) === 0) {
       this.setState({
         modal: { content: 'Pleace specify the amount.', header: 'Error' }
       });
       return this.handleOpenModal();
     }
+
+    if (!isValidAmount(value)) {
+      this.setState({
+        modal: {
+          content: (
+            <>
+              <p>Invalid amount for withdrawl.</p>
+              <p>
+                Available banknotes for withdrawal are:
+                <br />
+                {BANKNOTES.map(bn => (
+                  <p key={bn}>
+                    {CURRENCIES[1]}
+                    {bn}
+                  </p>
+                ))}
+              </p>
+            </>
+          ),
+          header: 'Error'
+        }
+      });
+      return this.handleOpenModal();
+    }
+
+    this.withdraw(value);
+  }
+
+  async withdraw(value) {
     console.log(`Withdrawing ${value}`);
     this.setState({ modal: { content: null, header: 'Loading...' } });
 
-    await WithdrawAPI.withdraw(Number(value))
-      .then(({ response: { data } }) => {
-        this.setState({
-          modal: { content: data.toString(), header: 'Success!' }
-        });
-      })
-      .catch(({ response: { data } }) => {
-        this.setState({
-          modal: {
-            content: data,
-            header: 'Error'
-          }
-        });
+    const [error, data] = await WithdrawAPI.withdraw(Number(value));
+
+    if (error) {
+      this.setState({ modal: { content: data, header: 'Error' } });
+    } else {
+      this.setState({
+        modal: {
+          content: (
+            <>
+              <p>Please take your cash</p>
+              <p>
+                {data.map(bn => (
+                  <p key={bn}>
+                    <i className="fa fa-money-bill-wave"></i>
+                    {CURRENCIES[1]}
+                    {bn.banknoteValue}
+                    {': '}
+                    {bn.quantity}
+                  </p>
+                ))}
+              </p>
+            </>
+          ),
+          header: 'Success!'
+        }
       });
+    }
 
     return this.handleOpenModal();
   }
@@ -89,7 +138,7 @@ class App extends React.Component {
       <div className="App">
         <h1 className="App__heading">ATM Simulator</h1>
         <AtmSimulator
-          withdraw={this.withdraw}
+          withdraw={this.tryWithdraw}
           separator={SEPARATORS[1]}
           prefix={CURRENCIES[1]}
           postfix={POSTFIXES[0]}
@@ -106,4 +155,12 @@ class App extends React.Component {
   }
 }
 
-export default hot(module)(App);
+export default App;
+
+/**
+ * Uncomment hot import and below lines
+ * for hot module reloading during
+ * development only `npm run dev:hot`.
+ **/
+
+// export default hot(module)(App);
