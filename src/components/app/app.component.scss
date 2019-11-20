@@ -41,6 +41,14 @@ h1.App__heading {
     color: #444;
     font-size: 1.3em;
     padding: 16px;
+
+    & > p {
+      margin: 20px 0;
+    }
+
+    & i {
+      margin-right: 10px;
+    }
   }
 
   &__footer {
